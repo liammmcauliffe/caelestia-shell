@@ -6,6 +6,8 @@
 #include <qfileinfo.h>
 #include <qqmlengine.h>
 #include <qthreadpool.h>
+#include <cmath>
+#include <limits>
 
 namespace caelestia {
 
@@ -47,7 +49,7 @@ void CUtils::saveItem(QQuickItem* target, const QUrl& path, const QRect& rect, Q
 
     auto scaledRect = rect;
     const qreal scale = target->window()->devicePixelRatio();
-    if (rect.isValid() && scale != 1.0) {
+    if (rect.isValid() && std::abs(scale - 1.0) > std::numeric_limits<qreal>::epsilon()) {
         scaledRect =
             QRectF(rect.left() * scale, rect.top() * scale, rect.width() * scale, rect.height() * scale).toRect();
     }
