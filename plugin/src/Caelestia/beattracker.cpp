@@ -56,7 +56,7 @@ void BeatProcessor::process() {
     m_collector->readChunk(m_in->data);
 
     aubio_tempo_do(m_tempo, m_in, m_out);
-    if (std::abs(m_out->data[0]) > std::numeric_limits<float>::epsilon()) {
+    if (!qFuzzyIsNull(m_out->data[0])) {
         emit beat(aubio_tempo_get_bpm(m_tempo));
     }
 }
